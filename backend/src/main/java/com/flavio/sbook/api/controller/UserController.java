@@ -33,4 +33,16 @@ public class UserController {
     public User saveUser(@RequestBody User user) {
         return userRepository.save(user);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+        if(!userRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        user.setId(id);
+        user = userRepository.save(user);
+
+        return ResponseEntity.ok(user);
+    }
 }
