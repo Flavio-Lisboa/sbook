@@ -1,0 +1,1 @@
+ALTER TABLE user MODIFY user_id BINARY(16);
