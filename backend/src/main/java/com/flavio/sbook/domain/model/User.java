@@ -27,6 +27,16 @@ public class User {
     @Column(name = "user_name")
     private String firstName;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     @NotBlank
     @Email
     @Size(max = 50)
