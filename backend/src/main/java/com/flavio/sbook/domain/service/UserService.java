@@ -4,6 +4,8 @@ import com.flavio.sbook.domain.exception.DomainException;
 import com.flavio.sbook.domain.model.User;
 import com.flavio.sbook.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,10 @@ public class UserService {
         if(existEmail) {
             throw new DomainException("There is already a customer registered with this email.");
         }
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encoder = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encoder);
 
         return userRepository.save(user);
     }
