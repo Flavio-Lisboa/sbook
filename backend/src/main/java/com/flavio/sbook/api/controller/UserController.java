@@ -1,5 +1,7 @@
 package com.flavio.sbook.api.controller;
 
+import com.flavio.sbook.domain.enums.RoleName;
+import com.flavio.sbook.domain.model.Role;
 import com.flavio.sbook.domain.model.User;
 import com.flavio.sbook.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,12 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@Valid @RequestBody User user) {
+
+        Role role = new Role();
+        role.setId("836e80a0-b4c1-4f8d-a30b-2ef5434e4683");
+        role.setRoleName(RoleName.ROLE_USER);
+        user.setRoles(List.of(role));
+
         return userService.save(user);
     }
 
@@ -45,6 +53,12 @@ public class UserController {
         }
 
         user.setId(id);
+
+        Role role = new Role();
+        role.setId("836e80a0-b4c1-4f8d-a30b-2ef5434e4683");
+        role.setRoleName(RoleName.ROLE_USER);
+        user.setRoles(List.of(role));
+
         user = userService.save(user);
 
         return ResponseEntity.ok(user);
