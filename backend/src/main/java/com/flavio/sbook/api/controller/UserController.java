@@ -3,6 +3,7 @@ package com.flavio.sbook.api.controller;
 import com.flavio.sbook.domain.enums.RoleName;
 import com.flavio.sbook.domain.model.Role;
 import com.flavio.sbook.domain.model.User;
+import com.flavio.sbook.domain.service.RoleService;
 import com.flavio.sbook.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
@@ -38,7 +42,7 @@ public class UserController {
     public User saveUser(@Valid @RequestBody User user) {
 
         Role role = new Role();
-        role.setId("836e80a0-b4c1-4f8d-a30b-2ef5434e4683");
+        role.setId(roleService.getRoleID(RoleName.ROLE_USER));
         role.setRoleName(RoleName.ROLE_USER);
         user.setRoles(List.of(role));
 
@@ -55,7 +59,7 @@ public class UserController {
         user.setId(id);
 
         Role role = new Role();
-        role.setId("836e80a0-b4c1-4f8d-a30b-2ef5434e4683");
+        role.setId(roleService.getRoleID(RoleName.ROLE_USER));
         role.setRoleName(RoleName.ROLE_USER);
         user.setRoles(List.of(role));
 
